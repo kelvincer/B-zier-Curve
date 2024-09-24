@@ -92,6 +92,7 @@ void UpdateGame()
             if (currentGesture == GESTURE_DRAG)
             {
                 points[i] = touchPosition;
+                break;
             }
         }
     }
