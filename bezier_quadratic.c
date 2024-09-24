@@ -5,6 +5,7 @@
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450
+#define NUM_POINTS 3
 
 static bool onPause = false;
 static float t = 0.0f;
@@ -12,6 +13,8 @@ Vector2 *points = NULL;
 Vector2 curve;
 Vector2 line_1;
 Vector2 line_2;
+int currentGesture;
+Vector2 touchPosition;
 
 void UnloadGame();
 void DrawGame();
@@ -70,14 +73,29 @@ void DrawGame()
 
 void InitGame()
 {
-    points = calloc(3, sizeof(Vector2));
+    points = calloc(NUM_POINTS, sizeof(Vector2));
     points[0] = (Vector2){20, 40};
     points[1] = (Vector2){300, 400};
     points[2] = (Vector2){700, 100};
+    currentGesture = GESTURE_NONE;
 }
 
 void UpdateGame()
 {
+    currentGesture = GetGestureDetected();
+    touchPosition = GetTouchPosition(0);
+
+    for (size_t i = 0; i < NUM_POINTS; i++)
+    {
+        if (CheckCollisionPointCircle(touchPosition, points[i], 50))
+        {
+            if (currentGesture == GESTURE_DRAG)
+            {
+                points[i] = touchPosition;
+            }
+        }
+    }
+
     if (IsKeyPressed(KEY_P))
     {
         onPause = !onPause;
