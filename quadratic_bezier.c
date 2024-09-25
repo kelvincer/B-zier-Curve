@@ -6,6 +6,8 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 450
 #define NUM_POINTS 3
+#define FONT_SIZE 25
+#define TITLE "QUADRATIC BÉZIER"
 
 static bool onPause = false;
 static float t = 0.0f;
@@ -23,7 +25,7 @@ void UpdateGame();
 
 int main()
 {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Bezier-Curve");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, TITLE);
     InitGame();
     SetTargetFPS(60);
 
@@ -66,6 +68,8 @@ void DrawGame()
         DrawCircle(line_2.x, line_2.y, 5, BLUE);
 
         DrawCircle(curve.x, curve.y, 5, PURPLE);
+
+        DrawText(TITLE, SCREEN_WIDTH - MeasureText(TITLE, FONT_SIZE) - 10, SCREEN_HEIGHT - FONT_SIZE, FONT_SIZE, ORANGE);
     }
 
     EndDrawing();
